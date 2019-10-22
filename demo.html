@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <style>
+        html {
+            font-size: 100px;
+        }
+
+        html body {
+            font-family: Arial, Tahoma, "Microsoft Yahei", "Hiragino Sans GB", "Helvetica Neue", Simsun, sans-serif;
+            font-size: .12rem;
+        }
+
+        html,
+        body,
+        div,
+        span,
+        object,
+        iframe,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p,
+        blockquote,
+        pre,
+        abbr,
+        address,
+        cite,
+        code,
+        del,
+        dfn,
+        em,
+        img,
+        ins,
+        kbd,
+        q,
+        samp,
+        small,
+        strong,
+        sub,
+        sup,
+        var,
+        b,
+        i,
+        dl,
+        dt,
+        dd,
+        ol,
+        ul,
+        li,
+        fieldset,
+        form,
+        label,
+        legend,
+        table,
+        caption,
+        tbody,
+        tfoot,
+        thead,
+        tr,
+        th,
+        td,
+        article,
+        aside,
+        canvas,
+        details,
+        figcaption,
+        figure,
+        footer,
+        header,
+        hgroup,
+        menu,
+        nav,
+        section,
+        summary,
+        time,
+        mark,
+        audio,
+        video {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            outline: 0;
+            font-size: 100%;
+            vertical-align: baseline;
+            background: transparent;
+        }
+
+        body,
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: #fafafa;
+        }
+
+        article,
+        aside,
+        canvas,
+        details,
+        figcaption,
+        figure,
+        footer,
+        header,
+        hgroup,
+        menu,
+        nav,
+        section,
+        summary {
+            display: block;
+        }
+
+        nav,
+        ul,
+        ol {
+            list-style: none;
+        }
+
+        blockquote,
+        q {
+            quotes: none;
+        }
+
+        blockquote:before,
+        blockquote:after,
+        q:before,
+        q:after {
+            content: '';
+            content: none;
+        }
+
+        a {
+            text-decoration: none;
+            vertical-align: baseline;
+        }
+
+        ins {
+            background-color: #ff9;
+            color: #000;
+            text-decoration: none;
+        }
+
+        mark {
+            background-color: #ff9;
+            color: #000;
+            font-style: italic;
+            font-weight: bold;
+        }
+
+        del {
+            text-decoration: line-through;
+        }
+
+        abbr[title],
+        dfn[title] {
+            border-bottom: 1px dotted #000;
+            cursor: help;
+        }
+
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        hr {
+            display: block;
+            height: 1px;
+            border: 0;
+            border-top: 1px solid #cccccc;
+            margin: 1em 0;
+            padding: 0;
+        }
+
+        input,
+        select,
+        textarea {
+            vertical-align: middle;
+        }
+
+        input{
+            -webkit-appearance: none;
+        }
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: 0;
+        }
+
+        em {
+            font-style: normal;
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+            vertical-align: middle;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+        video{
+            object-fit: cover;
+        }
+    </style>
+    <style>
+        .ageComponent {
+            position: relative;
+            width: 261px;
+            margin: 0 auto;
+        }
+        .ageComponent .centerLine {
+            position: absolute;
+            top: 46px;
+            left: 125px;
+            width: 2px;
+            height: 40px;
+            background-color: #3aa7ff;
+        }
+        .ageComponent::before {
+            left: 0;
+            top: 46px;
+            width: 32px;
+            height: 32px;
+            position: absolute;
+            content: "";
+            background: linear-gradient(360deg, #fafafa 0%, rgba(250, 250, 250, 0.65) 100%);
+        }
+        .ageComponent::after {
+            right: 0;
+            top: 46px;
+            width: 32px;
+            height: 32px;
+            position: absolute;
+            content: "";
+            background: linear-gradient(360deg, #fafafa 0%, rgba(250, 250, 250, 0.65) 100%);
+        }
+        .ageComponent__age {
+            text-align: center;
+            height: 32px;
+            color: #3aa7ff;
+            line-height: 64px;
+            font-size: 11px;
+        }
+        .ageComponent__age span {
+            line-height: 32px;
+            font-size: 32px;
+            font-weight: bold;
+        }
+        .ageComponent--solid {
+            margin-top: 12px;
+            height: 2px;
+            background: linear-gradient(to right, rgba(95, 99, 121, 0.05), rgba(95, 99, 121, 0.3), rgba(95, 99, 121, 0.05));
+        }
+        .ageComponent .OverflowEle {
+            width: 100%;
+            height: 65px;
+            overflow: hidden;
+        }
+        .ageComponent__calibration {
+            display: flex;
+            width: 261px;
+            /*width: 100%;*/
+            height: 75px;
+            overflow-y: hidden;
+            overflow-x: scroll;
+        }
+        .ageComponent__calibration .item {
+            min-width: 23px;
+            height: 70px;
+        }
+        .ageComponent__calibration .item .lineBox {
+            height: 40px;
+            margin-bottom: 8px;
+        }
+        .ageComponent__calibration .item .line {
+            width: 2px;
+            margin: 0 auto;
+            height: 23px;
+            background-color: rgba(95, 99, 121, 0.4);
+        }
+        .ageComponent__calibration .item .line.short {
+            height: 24px;
+            background-color: rgba(95, 99, 121, 0.2);
+        }
+        .ageComponent__calibration .item .line.active {
+            background-color: transparent;
+        }
+        .ageComponent__calibration .item .num {
+            text-align: center;
+            color: rgba(95, 99, 121, 0.3);
+            font-size: 14px;
+        }
+
+        .ageComponent__calibration::-webkit-scrollbar {
+            display: none;
+            width: 0 !important;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="ageComponent">
+            <div class="centerLine"></div>
+            <div class="ageComponent__age"><span> {{centerNum}}</span>岁</div>
+            <div class="ageComponent--solid"></div>
+            <div class="OverflowEle">
+                <div class="ageComponent__calibration" @touchstart="onTouchStart" @touchmove="onTouchMove" @touchend="onTouchEnd" ref="calibration">
+                    <div class="item" v-for="item in count">
+                        <div class="lineBox">
+                            <div class="line" :class="{short: item % 2, active: centerNum === item &amp;&amp; interval === null}"></div>
+                        </div>
+                        <div class="num">{{item}}</div>
+                    </div>
+                    <div class="item"></div>
+                    <div class="item"></div>
+                    <div class="item"></div>
+                    <div class="item"></div>
+                    <div class="item"></div>
+                    <div class="item"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
+    new Vue({
+        el: '#app',
+        name: "pickerAge",
+        data () {
+            return {
+                age: 6,
+                centerNum: 6,
+                standard: 0,
+                calibrationWidth: 0,
+                data: 0,
+                count: 99,
+                interval: null //定时器
+            }
+        },
+        created () {
+        },
+        mounted () {
+            this.initAge()
+            // if (this.$refs.calibration.scrollLeft === 0) {
+            this.standard = this.$refs.calibration.getElementsByClassName('item')[0].clientWidth
+            console.log(this.standard)
+            this.calibrationWidth = this.$refs.calibration.clientWidth
+            // }
+            const _this = this
+            let topValue = 0// 上次滚动条到顶部的距离
+            // interval = null;// 定时器
+
+            function debounce(fn) {
+                let timeout = null; // 创建一个标记用来存放定时器的返回值
+                return function () {
+                    clearTimeout(timeout); // 每当用户输入的时候把前一个 setTimeout clear 掉
+                    timeout = setTimeout(() => { // 然后又创建一个新的 setTimeout, 这样就能保证输入字符后的 interval 间隔内如果还有字符输入的话，就不会执行 fn 函数
+                        fn.apply(this, arguments);
+                    }, 100);
+                };
+            }
+
+            function sayHi() {
+                console.log('防抖成功');
+            }
+            function test() {
+                clearInterval(_this.interval);
+                _this.$refs.calibration.scrollLeft = _this.data
+                _this.interval = null;
+            }
+            this.$refs.calibration.addEventListener('scroll', debounce(test))
+            this.$refs.calibration.addEventListener('scroll',  function (e) {
+                // if(_this.interval == null) {
+                //     _this.interval = setInterval(test, 200);
+                // }
+                debounce(sayHi)
+                const scrollLeft = _this.$refs.calibration.scrollLeft
+                let round = Math.round(scrollLeft / _this.standard)
+
+                topValue = _this.$refs.calibration.scrollLeft
+
+                if (round + 6 > _this.count) {
+                    round = _this.count - 6
+                }
+
+                _this.data = _this.$refs.calibration.getElementsByClassName('item')[(round)].offsetLeft
+                _this.centerNum = round + 6
+
+                _this.$emit('onChangeAge', _this.centerNum)
+            })
+        },
+        methods: {
+            onTouchStart (e) {
+                e.stopPropagation()
+            },
+            onTouchMove (e) {
+                // this.data = this.$refs.calibration.scrollLeft
+                // const scrollLeft = this.$refs.calibration.scrollLeft
+                // let round = Math.round(scrollLeft / this.standard)
+                // if (round + 6 > this.count) {
+                //     round = this.count - 6
+                // }
+                //
+                // this.centerNum = round + 6
+            },
+            onTouchEnd (e) {
+            },
+            initAge () {
+                this.centerNum = this.age
+
+                this.$refs.calibration.scrollLeft = this.$refs.calibration.getElementsByClassName('item')[this.age - 6].offsetLeft
+            }
+        }
+    })
+</script>
+</body>
+</html>
