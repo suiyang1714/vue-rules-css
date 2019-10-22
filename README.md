@@ -1,7 +1,7 @@
 ### 移动端刻度尺
 
 
-[demo](https://note.youdao.com/)
+[demo](https://suiyang1714.github.io/vue-rules-css/)
 - 解决滑动后惯性停止选择刻度
 - 兼容ios滚动条消失术
 
